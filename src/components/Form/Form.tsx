@@ -33,7 +33,7 @@ export const Form = ({ fetchWeather }: FormProps) => {
     if (Object.values(search).includes("")) {
       setAlert("Todos los campos son obligatorios");
     }
-    setSearch(initialSearch);
+
     fetchWeather(search);
   };
   return (

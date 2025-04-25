@@ -9,6 +9,7 @@ html {
 body {
   font-family: "Outfit", sans-serif;
   background-image: url("/bg-clima.jpg");
+
   background-size: cover; /* Que cubra toda la pantalla */
   background-position: center; /* Centrada */
   background-repeat: no-repeat;

@@ -99,7 +99,7 @@ export default function useWeather() {
 
       //ZOD
       const { data: weatherResult } = await axios(weatherUrl);
-      console.log(weatherResult);
+
       const result = Weather.safeParse(weatherResult);
       if (result.success) {
         setWeather(result.data);
@@ -119,6 +119,7 @@ export default function useWeather() {
   };
 
   const hasWeatherData = useMemo(() => weather.name, [weather]);
+
   return {
     fetchWeather,
     loading,

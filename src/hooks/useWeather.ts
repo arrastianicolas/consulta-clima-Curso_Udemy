@@ -3,6 +3,7 @@ import { SearchType } from "../types";
 // import { object, string, number, InferOutput, parse } from "valibot";
 import { z } from "zod";
 import { useMemo, useState } from "react";
+
 //TYPE GUARD O ASSERTION =>  una forma de garantizar el tipo de respuesta de una API
 // function isWeatherResponse(weather : unknown) :weather is Weather {
 //     return (
@@ -24,8 +25,14 @@ const Weather = z.object({
     temp_max: z.number(),
     temp_min: z.number(),
   }),
+  weather: z.array(
+    z.object({
+      description: z.string(),
+      icon: z.string(),
+    })
+  ),
 });
-export type Weather = z.infer<typeof Weather>;
+export type WeatherType = z.infer<typeof Weather>;
 
 // Valibot
 // const WeatherSchema = object({
@@ -45,10 +52,16 @@ const initialState = {
     temp_max: 0,
     temp_min: 0,
   },
+  weather: [
+    {
+      description: "",
+      icon: "",
+    },
+  ],
 };
 
 export default function useWeather() {
-  const [weather, setWeather] = useState<Weather>(initialState);
+  const [weather, setWeather] = useState<WeatherType>(initialState);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
 
@@ -86,6 +99,7 @@ export default function useWeather() {
 
       //ZOD
       const { data: weatherResult } = await axios(weatherUrl);
+      console.log(weatherResult);
       const result = Weather.safeParse(weatherResult);
       if (result.success) {
         setWeather(result.data);
